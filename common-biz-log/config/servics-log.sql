@@ -1,0 +1,21 @@
+CREATE TABLE `services_log` (
+    `log_id` bigint(11) NOT NULL AUTO_INCREMENT COMMENT '日志ID',
+    `trace_id` varchar(64) NOT NULL,
+    `services_scope` tinyint(4) NOT NULL COMMENT '业务日志范畴（菜单级别）：1：组织机构，2：客商管理，3：培训管理，4：财务管理，5：鉴定管理',
+    `business_scope` varchar(10) NOT NULL COMMENT '业务范畴（业务类型+报告类型）',
+    `page_name` varchar(40) NOT NULL COMMENT '操作页面（具体页面，修改审批提交保存）',
+    `page_function` tinyint(4) NOT NULL COMMENT '操作功能（1-增,2-删,3-改,4-查）',
+    `log_remark` text COMMENT '日志明细-入参',
+    `log_update_remark` text COMMENT '日志明细-修改数据',
+    `cause` text COMMENT '如果发生异常记录异常信息',
+    `log_ip` varchar(32) DEFAULT NULL,
+    `creator_id` int(11) NOT NULL COMMENT '操作人id',
+    `creator_name` varchar(100) NOT NULL COMMENT '操作人姓名',
+    `create_time` datetime NOT NULL COMMENT '操作人时间',
+    `module_type` tinyint(4) DEFAULT NULL COMMENT '日志模块类型',
+    `url` varchar(256) DEFAULT NULL COMMENT '日志的访问url',
+    PRIMARY KEY (`log_id`) USING BTREE,
+    KEY `services_log.SY.01` (`log_id`,`business_scope`,`services_scope`) USING BTREE,
+    KEY `services_log.SY.02` (`log_ip`) USING BTREE,
+    KEY `services_log.SY.04` (`creator_id`,`creator_name`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=23133 DEFAULT CHARSET=utf8 COMMENT='业务日志表'
